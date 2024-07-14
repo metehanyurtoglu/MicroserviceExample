@@ -1,10 +1,13 @@
 # MicroserviceExample
 
 This is a sample E-Commerce project utilizing multiple microservice architectures.
+****
 
 ## Overview
 
 This project demonstrates a comprehensive approach to building a scalable E-Commerce system using a microservices architecture. Each microservice is designed to handle specific business functionalities, ensuring modularity, maintainability, and scalability.
+
+**✨ Other microservice projects will be added in time.**
 
 ## Microservices
 
@@ -21,7 +24,17 @@ The `Catalog.API` service is responsible for managing the product catalog. It le
 - **Minimal API Endpoints**: Defines API endpoints using Carter for minimal and efficient API routing.
 - **Cross-Cutting Concerns**: Implements logging, global exception handling, and health checks for robust and reliable operations.
 
-**Other microservice projects will be add in time.**
+### Basket.API
+The `Basket.API` service is responsible for managing the shopping basket. It leverages the .NET 8 framework and follows the Vertical Slice Architecture. The service is containerized using Docker and can be orchestrated with Docker Compose.
+
+#### Key Features:
+- **CQRS Implementation**: Utilizes the MediatR library for Command and Query Responsibility Segregation (CQRS) pattern.
+- **Pipeline Behaviors**: Incorporates MediatR and FluentValidation for request validation and other cross-cutting concerns.
+- **Transactional Document DB**: Uses Marten library for transactional document database management on PostgreSQL.
+- **Minimal API Endpoints**: Defines API endpoints using Carter for minimal and efficient API routing.
+- **Cross-Cutting Concerns**: Implements logging, global exception handling, and health checks for robust and reliable operations.
+- **Distributed Cache**: Uses Redis as a distributed cache over basketdb.
+- **Design Patterns**: Implements Proxy, Decorator, and Cache-aside patterns.
 
 ## Getting Started
 
@@ -50,10 +63,16 @@ The `Catalog.API` service is responsible for managing the product catalog. It le
     https://localhost:6060/swagger/index.html
     ```
 
+    - Basket API: 
+    ```sh
+    http://localhost:6001/swagger/index.html
+    https://localhost:6061/swagger/index.html
+    ```
+
 ## Usage
 
 ### API Documentation
 
 API endpoints and usage details are available in the Swagger index.html
 
-Also you can check status usin by /health route.
+Also you can check status using by /health route.
