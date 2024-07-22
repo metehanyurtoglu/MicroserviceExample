@@ -1,6 +1,6 @@
 # MicroserviceExample
 
-This is a sample E-Commerce project utilizing multiple microservice architectures.
+This is a sample E-Commerce project utilizing multiple microservice projects.
 ****
 
 ## Overview
@@ -36,6 +36,18 @@ The `Basket.API` service is responsible for managing the shopping basket. It lev
 - **Distributed Cache**: Uses Redis as a distributed cache over basketdb.
 - **Design Patterns**: Implements Proxy, Decorator, and Cache-aside patterns.
 
+### Discount.gRPC
+The `Discount.gRPC` service is responsible for managing discounts. It leverages the .NET 8 framework and follows the N-Layer Architecture. The service is containerized using Docker and can be orchestrated with Docker Compose.
+
+#### Key Features:
+- **ASP.NET gRPC Service Application**: Ensures highly performant inter-service gRPC communication between Discount and Basket microservices.
+- **gRPC Communications and Proto Files**: Handles CRUD operations through gRPC by defining Protobuf messages.
+- **SQLite Database Connection**: Establishes a connection to an SQLite database, containerized for ease of deployment.
+- **Entity Framework Core ORM**: Utilizes the SQLite Data Provider and migrations for simplified data access and high performance.
+- **N-Layer Architecture Implementation**: Follows the N-Layer architecture for a well-structured and maintainable codebase.
+- **Containerization with Docker Compose**: The Discount microservice, along with its SQLite database, can be orchestrated using Docker Compose.
+- **JSON Transcoding and Swagger Support**: Supports HTTP calls with JSON transcoding and utilizes the Swashbuckle library to provide Swagger documentation, enabling both gRPC and HTTP API calls.
+
 ## Getting Started
 
 ### Prerequisites
@@ -57,16 +69,22 @@ The `Basket.API` service is responsible for managing the shopping basket. It lev
     ```
 
 3. **Accessing the Services**
-    - Catalog API: 
+    - Catalog API
     ```sh
     http://localhost:6000/swagger/index.html
     https://localhost:6060/swagger/index.html
     ```
 
-    - Basket API: 
+    - Basket API
     ```sh
     http://localhost:6001/swagger/index.html
     https://localhost:6061/swagger/index.html
+    ```
+    
+    - Discount gRPC
+    ```sh
+    http://localhost:6002/swagger/index.html
+    https://localhost:6062/swagger/index.html
     ```
 
 ## Usage
