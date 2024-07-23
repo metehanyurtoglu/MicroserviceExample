@@ -2,42 +2,23 @@ syntax = "proto3";
 
 option csharp_namespace = "Discount.gRPC";
 
-import "google/api/annotations.proto";
+//import "google/api/annotations.proto";
 
 package discount;
 
 //The discount service definitions
 service DiscountProtoService {
 	//GetDiscount
-	rpc GetDiscount (GetDiscountRequest) returns (CouponModel) { 
-		option (google.api.http) = {
-			get: "/discount"
-		};
-	};
+	rpc GetDiscount (GetDiscountRequest) returns (CouponModel);
 	
 	//CreateDiscount
-	rpc CreateDiscount (CreateDiscountRequest) returns (CouponModel) {
-		option (google.api.http) = {
-			post: "/discount",
-			body: "*"
-		};
-	};
+	rpc CreateDiscount (CreateDiscountRequest) returns (CouponModel);
 
 	//UpdateDiscount
-	rpc UpdateDiscount (UpdateDiscountRequest) returns (CouponModel) {
-		option (google.api.http) = {
-			put: "/discount",
-			body: "*"
-		};
-	};
+	rpc UpdateDiscount (UpdateDiscountRequest) returns (CouponModel);
 
 	//DeleteDiscount
-	rpc DeleteDiscount (DeleteDiscountRequest) returns (DeleteDiscountResponse) {
-		option (google.api.http) = {
-			delete: "/discount",
-			body: "*"
-		};
-	};
+	rpc DeleteDiscount (DeleteDiscountRequest) returns (DeleteDiscountResponse);
 }
 
 message CouponModel {

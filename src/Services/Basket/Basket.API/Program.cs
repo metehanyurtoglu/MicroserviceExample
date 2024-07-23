@@ -3,12 +3,14 @@ using Basket.API.Data.Repositories;
 using Basket.API.Models;
 using Core.Application.Behaviors;
 using Core.Application.Exceptions.Handler;
+using Discount.gRPC;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     // Add services to the container.
+    #region Application Services
     var assembly = typeof(Program).Assembly;
 
     builder.Services.AddCarter();
@@ -23,7 +25,9 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddValidatorsFromAssembly(assembly);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    #endregion
 
+    #region Data Services
     builder.Services.AddMarten(options =>
     {
         options.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -37,12 +41,33 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.Configuration = builder.Configuration.GetConnectionString("Redis");
     });
+    #endregion
 
+    #region gRPC Service
+    builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+    {
+        options.Address = new Uri(builder.Configuration["gRPCSettings:DiscountUrl"]!);
+    })
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        var handler = new HttpClientHandler();
+
+        if (builder.Environment.IsDevelopment())
+        {
+            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+        }
+
+        return handler;
+    });
+    #endregion
+
+    #region Cross-Cutting Services
     builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
     builder.Services.AddHealthChecks()
         .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
         .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+    #endregion
 }
 
 var app = builder.Build();
